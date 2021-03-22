@@ -1,0 +1,46 @@
+
+<ion-toolbar id="toolbar" color="dark">
+  <ion-avatar class="ion-margin" slot="start" style="width: 50px; height: 50px;">
+    <img src="../../../assets/IMG-20210212-WA0043.jpg">
+  </ion-avatar>
+    <ion-title>SBWL Admin</ion-title>
+</ion-toolbar>
+
+<ion-content>
+
+  <mat-sidenav-container class="example-container" >
+    
+    <mat-sidenav  style="background-color: #222428;" #sidenav mode="side" fixedInViewport="true" opened fixedTopGap="80" id="sideNav">
+
+      <ion-item button="true"  (click)="navigate('home')" style="border: none;" color="dark">
+        <mat-icon slot="start">palette</mat-icon><ion-label class="pagestabs">Dashboard</ion-label>
+      </ion-item>
+
+      <ion-item button="true"  (click)="navigate('products')" style="border: none;" color="dark">
+        <mat-icon slot="start">local_offer</mat-icon><ion-label class="pagestabs">Products</ion-label>
+      </ion-item>
+
+      <ion-item button="true" (click)="navigate('orders')" style="border: none;" color="dark">
+        <mat-icon slot="start">library_books</mat-icon><ion-label class="pagestabs">Orders</ion-label>
+      </ion-item>
+
+      <ion-item button="true"  (click)="navigate('customers')" style="border: none;" color="dark">
+        <mat-icon slot="start">people</mat-icon><ion-label class="pagestabs">Customers</ion-label>
+      </ion-item>
+
+      <ion-item button="true"  style="border: none;" color="dark">
+        <mat-icon slot="start">logout</mat-icon><ion-label class="pagestabs">Logout</ion-label>
+      </ion-item>
+      
+    </mat-sidenav>
+    <mat-sidenav-content style="margin-left: 217px; background-color: white; outline: 1px solid;" >
+      
+      <router-outlet></router-outlet>
+  
+  
+    </mat-sidenav-content>
+  
+  </mat-sidenav-container>
+
+
+</ion-content>

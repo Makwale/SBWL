@@ -1,0 +1,7 @@
+{
+  "name": "SBWLAdmin",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

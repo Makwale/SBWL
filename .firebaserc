@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "kazivibes": {
+      "hosting": {
+        "app": [
+          "kazivibes"
+        ]
+      }
+    }
+  }
+}
