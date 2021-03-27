@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestore,AngularFirestoreCollection } from '@angular/fire/firestore'
 import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import firebase from 'firebase/app';
 import { Product } from '../model/product.model';
 import { ProductsService } from './products.service';
@@ -10,11 +11,11 @@ import { ProductsService } from './products.service';
   providedIn: 'root'
 })
 export class DatabaseService {
-  
+ 
   
   constructor(private afs: AngularFirestore,
     private afa: AngularFireAuth, 
-    private router: Router, public ps: ProductsService) { }
+    private router: Router, public ps: ProductsService, private modalController: ModalController) { }
 
   getCustomers() {
     return this.afs.collection("Customer").snapshotChanges();
@@ -102,4 +103,19 @@ export class DatabaseService {
     })
     
   }
+
+  addProduct(name: string, desc: string, price: string, cat: string) {
+    this.afs.collection("Product").add({
+      name: name,
+      desc: desc,
+      price: price,
+      category: cat,
+    }).then(() =>{
+      alert("Product Added");
+      this.modalController.dismiss();
+    }).catch(error => {
+      alert(error.message)
+    })
+  }
+  
 }

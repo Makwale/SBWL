@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { Product } from 'src/app/model/product.model';
 import { DatabaseService } from 'src/app/services/database.service';
 
@@ -11,10 +12,11 @@ export class UpdateproductPage implements OnInit {
 
   @Input() product: Product;
   url = "";
-  constructor(private dbs: DatabaseService) { }
+
+  constructor(private dbs: DatabaseService, private modalController: ModalController) { }
 
   ngOnInit() {
-    
+   
   }
 
   updateProduct(name, desc, price, cat){
@@ -31,6 +33,10 @@ export class UpdateproductPage implements OnInit {
 
     this.dbs.updateProduct(this.product);
 
+  }
+
+  dismiss(){
+    this.modalController.dismiss()
   }
 
 }

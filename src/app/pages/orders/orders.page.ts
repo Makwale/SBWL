@@ -101,12 +101,19 @@ export class OrdersPage implements OnInit {
   }
 
   changeOrderStatus(id, status){
-    this.dbs.changeOrderStatus(id, status);
-    this.getAllOrders();
+    for(let order of this.orders){
+      if(order.id == id){
+        order.status = status;
+        this.dbs.changeOrderStatus(id, status);
+        this.getAllOrders();
+        break;
+      }
+    }
+    
   }
 
   navigatToItems(id){
-    this.router.navigate(["items"], {queryParams: {"id": id}});
+    this.router.navigate(["main/items"], {queryParams: {"id": id}});
   }
 
 }

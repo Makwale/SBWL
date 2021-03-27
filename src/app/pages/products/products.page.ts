@@ -51,11 +51,12 @@ export class ProductsPage implements OnInit {
     modal.present();
   }
 
-  async updateProduct(product){
+  async updateProduct(id){
+    let prod: Product = this.products.filter( product => product.id == id).pop();
     let modal = await this.modalController.create({
       component: UpdateproductPage,
       componentProps: {
-        product: product,
+        product: prod,
       }
     })
 
@@ -92,7 +93,7 @@ export class ProductsPage implements OnInit {
         let tempvar = productdata.payload.doc.data();
 
         let product = new Product(productdata.payload.doc.id, tempvar['name'], tempvar['desc'],
-        tempvar['price']);
+        tempvar['price'], tempvar['category']);
         
         if(!this.search(product)){
           this.products.push(product);
