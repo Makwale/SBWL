@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Product } from 'src/app/model/product.model';
 import { DatabaseService } from 'src/app/services/database.service';
+import { AddproductPage } from '../addproduct/addproduct.page';
+import { UpdateproductPage } from '../updateproduct/updateproduct.page';
 
 @Component({
   selector: 'app-products',
@@ -14,7 +16,7 @@ import { DatabaseService } from 'src/app/services/database.service';
 })
 export class ProductsPage implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'desc', 'price', 'actions'];
+  displayedColumns: string[] = ['name', 'desc', 'price', 'actions'];
 
   products: Product[] = [];
 
@@ -37,29 +39,33 @@ export class ProductsPage implements OnInit {
   }
 
   ngAfterViewInit() {
-    //this.dataSource.paginator = this.paginator;
-    //this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
-  deleteDuplicates(){
-    for(let instructor of this.products){
-      if( this.tempVar.length < 1){
-        this.tempVar.push(instructor);
-      }else{
-        if(!this.search(instructor)){
-          this.tempVar.push(instructor);
-        }
-        
+  async addProduct(){
+    let modal = await this.modalController.create({
+      component: AddproductPage
+    })
+
+    modal.present();
+  }
+
+  async updateProduct(product){
+    let modal = await this.modalController.create({
+      component: UpdateproductPage,
+      componentProps: {
+        product: product,
       }
-    }
+    })
 
-    this.products = this.tempVar;
-    
-    return this.products;
+    modal.present();
   }
+
+ 
 
   search(product: Product): boolean{
-    for(let tempCus of this.tempVar){
+    for(let tempCus of this.products){
       if(tempCus.id == product.id) {
         return true;
       }
@@ -68,12 +74,15 @@ export class ProductsPage implements OnInit {
     return false;
   }
 
-  deleteProdcut(id){
-    this.dbs.deleteProduct(id);
+  deleteProduct(id){
+    if(confirm("Are you sure ?")){
+      this.dbs.deleteProduct(id);
     
-    this.deleteProductFromArray(id);
+      this.deleteProductFromArray(id);
 
-    this.getAllProducts();
+      this.getAllProducts();
+    }
+    
     
   }
 
@@ -85,20 +94,18 @@ export class ProductsPage implements OnInit {
         let product = new Product(productdata.payload.doc.id, tempvar['name'], tempvar['desc'],
         tempvar['price']);
         
-
-        this.products.push(product);
-
-        console.log(tempvar)
-        
-        this.deleteDuplicates();
-        
+        if(!this.search(product)){
+          this.products.push(product);
+          this.dataSource = new MatTableDataSource(this.products);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        }
+     
     });
 
 
 
-    this.dataSource = new MatTableDataSource(this.products);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+  
     
 
   });
@@ -109,8 +116,16 @@ export class ProductsPage implements OnInit {
     for(let i = 0; i < this.products.length ; i++){
       if(this.products[i].id == id){
         this.products.splice(i,1);
+          this.dataSource = new MatTableDataSource(this.products);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        break;
       }
     }
+  }
+
+  searchProduct(value){
+    this.dataSource.filter = value;
   }
 
 }

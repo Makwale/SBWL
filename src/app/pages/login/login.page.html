@@ -1,0 +1,24 @@
+
+<div style=" background-image: url(../../../assets/IMG-20210212-WA0043.jpg);height: 100%">
+  <div style=" margin-top: 0px; height: 100%; padding-top: 200px; background-color: rgba(245, 245, 245, 0.979);">
+    <div style="width: 50%; margin: auto; height: 300px; background-color: white;padding-top: 10px; border-radius: 5px;" >
+      <h2 style="text-align: center;">Admin Sign In</h2>
+      <ion-card >
+        <ion-card-content>
+          <ion-item>
+            <ion-label position="stacked">Email</ion-label>
+            <ion-input #email type="email"></ion-input>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label position="stacked">Password</ion-label>
+            <ion-input #password type="password"></ion-input>
+          </ion-item>
+  
+          <ion-button color="light" size="large" expand="block" (click)="signIn(email.value, password.value)">Sign In</ion-button>
+        </ion-card-content>
+      </ion-card>
+      
+    </div>
+  </div>
+</div>

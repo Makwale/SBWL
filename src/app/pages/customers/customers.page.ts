@@ -59,7 +59,7 @@ export class CustomersPage implements OnInit {
   }
 
   search(customer: Customer): boolean{
-    for(let tempCus of this.tempVar){
+    for(let tempCus of this.customers){
       if(tempCus.getId() == customer.getId()) {
         return true;
       }
@@ -69,7 +69,7 @@ export class CustomersPage implements OnInit {
   }
 
   deleteCustomer(studentId){
-    this.dbs.deleteStudent(studentId);
+    this.dbs.deleteCustomer(studentId);
     
     this.deleteStudentFromArray(studentId);
 
@@ -85,19 +85,19 @@ export class CustomersPage implements OnInit {
         let customer = new Customer(customerdata.payload.doc.id, tempvar['firstname'], tempvar['lastname'],
         tempvar['gender'], tempvar['phone'], tempvar['email']);
         
+        if(!this.search(customer)){
 
-        this.customers.push(customer);
-        
-        this.deleteDuplicates();
+          this.customers.push(customer);
+          
+          this.dataSource = new MatTableDataSource(this.customers);
+
+          this.dataSource.sort = this.sort;
+
+          this.dataSource.paginator = this.paginator;
+
+        }
         
     });
-
-
-
-    this.dataSource = new MatTableDataSource(this.customers);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    
 
   });
 

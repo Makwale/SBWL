@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add Product</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item>
+    <ion-label position="floating">Product Name</ion-label>
+    <ion-input type="text" #name  required="true"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Product Description</ion-label>
+    <ion-input type="text" #desc required="true"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Price</ion-label>
+    <ion-input type="number" #price required="true"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Category (Optional)</ion-label>
+    <ion-select #cat>
+      <ion-select-option value="i">International Kota</ion-select-option>
+      <ion-select-option value="f">Fish and Chips</ion-select-option>
+      <ion-select-option value="c">Chips</ion-select-option>
+      <ion-select-option value="r">Ribs</ion-select-option>
+      <ion-select-option value="b">Burger</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Image (Optional)</ion-label>
+    <ion-input type="file" accept="image/*" (change)="uplaoad($event)"></ion-input>
+  </ion-item>
+
+ <ion-button color="secondary" expand="block" (click)="add(name.value, desc.value, price.value, cat.value)">Add</ion-button>
+ <ion-button color="light" expand="block" (click)="dismiss()">Cancel</ion-button>
+
+</ion-content>

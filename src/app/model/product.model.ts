@@ -1,10 +1,19 @@
 export class Product{
+    
     id: string;
+
     name: string;
+
     desc: string;
+
     price: number;
 
-    constructor(id, name, desc, price){
+    cat?: string;
+
+    url?: string;
+
+
+    constructor(id, name, desc, price, cat?: string, url?: string){
 
         this.id = id;
 
@@ -13,6 +22,10 @@ export class Product{
         this.desc = desc;
 
         this.price = price;
+
+        this.cat = cat;
+
+        this.url = url;
 
     }
 

@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AdminGuard } from './guards/admin.guard';
 import { MainPage } from './pages/main/main.page';
 
 const routes: Routes = [
   
   {
-    path: '',
+    path: 'main',
     component: MainPage,
+    canActivate: [ AdminGuard ],
     children: [  
     
     {
@@ -30,11 +32,29 @@ const routes: Routes = [
     {
       path: 'orders',
       loadChildren: () => import('./pages/orders/orders.module').then( m => m.OrdersPageModule)
+    },
+    {
+      path: 'items',
+      loadChildren: () => import('./pages/items/items.module').then( m => m.ItemsPageModule)
     },]
   },
-
-  
-  
+  {
+    path: 'addproduct',
+    loadChildren: () => import('./pages/addproduct/addproduct.module').then( m => m.AddproductPageModule)
+  },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'updateproduct',
+    loadChildren: () => import('./pages/updateproduct/updateproduct.module').then( m => m.UpdateproductPageModule)
+  },
 ];
 
 @NgModule({

@@ -14,15 +14,12 @@ import { DatabaseService } from 'src/app/services/database.service';
 })
 export class OrdersPage implements OnInit {
 
-  displayedColumns: string[] = ['id', 'number', 'date', 'actions'];
+  displayedColumns: string[] = ['id', 'number', 'date', 'status', 'actions'];
 
   orders: Order[] = [];
 
   dataSource: MatTableDataSource<Order>;
 
-  tempVar: Order[] = [];
-
-  
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   @ViewChild(MatSort) sort: MatSort;
@@ -37,29 +34,13 @@ export class OrdersPage implements OnInit {
   }
 
   ngAfterViewInit() {
-    //this.dataSource.paginator = this.paginator;
-    //this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
-  deleteDuplicates(){
-    for(let order of this.orders){
-      if( this.tempVar.length < 1){
-        this.tempVar.push(order);
-      }else{
-        if(!this.search(order)){
-          this.tempVar.push(order);
-        }
-        
-      }
-    }
-
-    this.orders = this.tempVar;
-    
-    return this.orders;
-  }
 
   search(order: Order): boolean{
-    for(let tempOrder of this.tempVar){
+    for(let tempOrder of this.orders){
       if(tempOrder.id == order.id) {
         return true;
       }
@@ -82,22 +63,28 @@ export class OrdersPage implements OnInit {
       data.forEach(orderdata => {
         let tempvar = orderdata.payload.doc.data();
 
-        let order = new Order(orderdata.payload.doc.id, tempvar['number'], tempvar['date']);
+        let order = new Order(orderdata.payload.doc.id, tempvar['number'], tempvar['date'], tempvar["status"]);
         
-        this.orders.push(order);
-        
-        this.deleteDuplicates();
-        
+        if(!this.search(order)){
+          this.orders.push(order);
+          this.dataSource = new MatTableDataSource(this.orders);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+          
+        }
+       
+      
     });
 
 
+   
+          this.dataSource = new MatTableDataSource(this.orders);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+   
 
-    this.dataSource = new MatTableDataSource(this.orders);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    });
     
-
-  });
 
   }
 
@@ -107,6 +94,19 @@ export class OrdersPage implements OnInit {
         this.orders.splice(i,1);
       }
     }
+  }
+
+  searchOrder(input){
+    this.dataSource.filter = input;
+  }
+
+  changeOrderStatus(id, status){
+    this.dbs.changeOrderStatus(id, status);
+    this.getAllOrders();
+  }
+
+  navigatToItems(id){
+    this.router.navigate(["items"], {queryParams: {"id": id}});
   }
 
 }

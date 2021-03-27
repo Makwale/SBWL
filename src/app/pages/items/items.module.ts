@@ -4,33 +4,30 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ProductsPageRoutingModule } from './products-routing.module';
-
-import { ProductsPage } from './products.page';
+import { ItemsPageRoutingModule } from './items-routing.module';
 import {MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatIconModule} from '@angular/material/icon';
+
+
+import { ItemsPage } from './items.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ProductsPageRoutingModule,
+    ItemsPageRoutingModule,
     MatTableModule,
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
     MatSortModule,
-    MatPaginatorModule,
-    MatMenuModule,
-    MatIconModule
+    MatPaginatorModule
   ],
-  declarations: [ProductsPage]
+  declarations: [ItemsPage]
 })
-export class ProductsPageModule {}
+export class ItemsPageModule {}
